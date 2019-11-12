@@ -835,7 +835,7 @@ bool next_fastqs( gzFile ffq, gzFile rfq, SQP curr_sqp, bool p64 ) {
 
   if ( (frs == 1) &&
       (rrs == 1) &&
-      f_r_id_check( curr_sqp->fid, id1len, curr_sqp->rid, id2len ) ) {
+      f_r_id_check( curr_sqp->fid, curr_sqp->rid ) ) {
     strncpy(curr_sqp->rc_rseq,curr_sqp->rseq,curr_sqp->rlen+1);
     strncpy(curr_sqp->rc_rqual,curr_sqp->rqual,curr_sqp->rlen+1);
     rev_qual(curr_sqp->rc_rqual, curr_sqp->rlen);
@@ -850,18 +850,16 @@ int write_fastq(gzFile out, char id[], char seq[], char qual[]){
   return gzprintf(out,"@%s\n%s\n+\n%s\n", id, seq, qual);
 }
 
-
-bool f_r_id_check( char fid[], size_t fid_len, char rid[], size_t rid_len ) {
-  if(fid_len != rid_len){
-    goto bad_read;
-    //}else if (strncmp( fid, rid, fid_len - 2) == 0 ) {
+/* Changed by laxeye */
+bool f_r_id_check( char fid[], char rid[]) {
+  char *part_f = strtok(fid, " ");
+  char *part_r = strtok(rid, " ");
+  if( strcmp(part_f, part_r) != 0 ){
+    fprintf(stderr,"ERROR: Fastq id lines do not match: %s vs %s \n", fid, rid);
+    return false;
   }else{
     return true;
   }
-
-  bad_read:
-  fprintf(stderr,"ERROR: Fastq id lines do not match: %s vs %s \n", fid, rid);
-  return false;
 }
 
 /* read_fastq

@@ -10,7 +10,7 @@
 
 #define MAX_ID_LEN (256)
 #define MAX_FN_LEN (512)
-#define MAX_SEQ_LEN (256)
+#define MAX_SEQ_LEN (306)
 //60+33 = 93 = '[' (was 83='S')
 #define MAX_QUAL (93)
 #define MIN_QUAL (33)
@@ -62,7 +62,7 @@ bool read_merge(SQP sqp, size_t min_olap,
     char adj_q_cut);
 extern bool next_fastqs( gzFile ffq, gzFile rfq, SQP curr_sqp, bool p64 );
 extern int write_fastq(gzFile out, char id[], char seq[], char qual[]);
-extern bool f_r_id_check( char fid[], size_t fid_len, char rid[], size_t rid_len );
+extern bool f_r_id_check(char fid[], char rid[]);
 int read_fastq( gzFile fastq, char id[], char seq[], char qual[],
     size_t *id_len, size_t *seq_len, bool p64 );
 gzFile fileOpen(const char *name, char access_mode[]);

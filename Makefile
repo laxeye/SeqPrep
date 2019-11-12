@@ -1,10 +1,10 @@
-CFLAGS=-c -Wall -O0 -g -std=c99
+CFLAGS=-c -Wall -O3 -g -std=c99
 #recommended options: -ffast-math -ftree-vectorize -march=core2 -mssse3 -O3
 COPTS=
 LDFLAGS=-lz -lm
 SOURCES=SeqPrep.c utils.c stdaln.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=SeqPrep
+EXECUTABLE=seqprep
 
 all: $(SOURCES) $(EXECUTABLE)
 
